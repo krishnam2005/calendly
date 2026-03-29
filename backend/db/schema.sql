@@ -38,7 +38,8 @@ CREATE TABLE bookings (
   platform VARCHAR(50), -- only for online
   location VARCHAR(500), -- only for offline
   reschedule_token VARCHAR(64) UNIQUE, -- token for secure rescheduling
-  status VARCHAR(20) DEFAULT 'scheduled', -- 'scheduled' or 'cancelled'
+  status VARCHAR(20) DEFAULT 'scheduled', -- 'scheduled', 'cancelled', or 'rescheduled'
+  rescheduled_from INT REFERENCES bookings(id), -- original booking id if this is a reschedule
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   -- Prevent double booking for the exact same event at the exact same start_time
   UNIQUE(event_type_id, start_time) 
